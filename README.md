@@ -2,7 +2,7 @@
 An easy way of having pixel perfect responsive images on every device.
 
   - Retina ready
-  - No 3rd party service needed
+  - No 3rd party cloud service needed
   - Works with images and background images
 
 ### Version
