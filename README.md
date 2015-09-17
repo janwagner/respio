@@ -28,7 +28,7 @@ $('[data-lazy-src]').each(function () {
     if(window.devicePixelRatio > 1) {
         $imgWidth = $img.width() * 2
     }
-    $img.attr('src',$img.data('lazy-src') + '&zc=1&q=90&a=cl&w=' + $imgWidth);
+    $img.attr('src',$img.data('lazy-src') + '&w=' + $imgWidth);
     $img.removeAttr('data-lazy-src');
 });
 ```
@@ -50,7 +50,7 @@ $('[data-lazy-bg-src]').each(function () {
     if(window.devicePixelRatio > 1) {
         $imgWidth = $img.width() * 2
     }
-    $element.css('background-image', 'url(' + $element.data('lazy-bg-src') + '&zc=1&q=90&a=cl&w=' + $imgWidth);
+    $element.css('background-image', 'url(' + $element.data('lazy-bg-src') + '&w=' + $imgWidth);
     $element.removeAttr('data-lazy-bg-src');
 });
 ```
