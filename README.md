@@ -27,7 +27,11 @@ We need to remove the src attribute of your image and replace it by a new custom
 ```sh
 $('[data-lazy-src]').each(function () {
     var $img = $(this);
-    $imgWidth = $img.width() * window.devicePixelRatio;
+    var $devicePixelRatio = 1;
+    if(window.devicePixelRatio > 1) {
+        $devicePixelRatio = window.devicePixelRatio
+    };
+    $imgWidth = $img.width() * $devicePixelRatio;
     $img.attr('src',$img.data('lazy-src') + '&w=' + $imgWidth);
     $img.removeAttr('data-lazy-src');
 });
@@ -46,7 +50,11 @@ We use jQuery to calculate the actual width of the image on your screen. Timthum
 ```sh
 $('[data-lazy-bg-src]').each(function () {
     var $element = $(this);
-    $imgWidth = $element.width() * window.devicePixelRatio;
+    var $devicePixelRatio = 1;
+    if(window.devicePixelRatio > 1) {
+        $devicePixelRatio = window.devicePixelRatio
+    };
+    $imgWidth = $element.width() * $devicePixelRatio;
     $element.css('background-image', 'url(' + $element.data('lazy-bg-src') + '&w=' + $imgWidth);
     $element.removeAttr('data-lazy-bg-src');
 });
