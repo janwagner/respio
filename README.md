@@ -22,7 +22,7 @@ http://dev.janwagner-design.de/respio/
 ```sh
 <img data-lazy-src="timthumb.php?src=yourimage.jpg" width="<?php echo getimagesize('yourimage.jpg')[0] ;?>">
 ```
-We need to remove the src attribute of your image and replace it by a new custom data Attribute to prevent it from loading. Your images should have a max-width of 100% and should also be wider than your content.
+We need to remove the src attribute of your image and replace it by a new custom data attribute to prevent it from loading. Your images should have a max-width of 100% and should also be wider than your content/container.
 #### 2. Script
 ```sh
 $('[data-lazy-src]').each(function () {
