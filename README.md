@@ -15,14 +15,14 @@ http://dev.janwagner-design.de/respio/
 
 * [php]
 * [jQuery]
-* [Timthumb] (or any other resize alternative)
+* [Timthumb] - or any other php image resize alternative
 
 ## Responsive images
 #### 1. Markup
 ```sh
-<img data-lazy-src="timthumb.php?src=yourimage.jpg" width="<?php echo getimagesize('image.jpg')[0] ;?>">
+<img data-lazy-src="timthumb.php?src=yourimage.jpg" width="<?php echo getimagesize('yourimage.jpg')[0] ;?>">
 ```
-Your images should have a max-width of 100% and should also be wider than your content.
+We need to remove the src attribute of your image and replace it by a new custom data Attribute to prevent it from loading. Your images should have a max-width of 100% and should also be wider than your content.
 #### 2. Script
 ```sh
 $('[data-lazy-src]').each(function () {
@@ -35,7 +35,7 @@ $('[data-lazy-src]').each(function () {
     $img.removeAttr('data-lazy-src');
 });
 ```
-Timthumb will create new pixel perfect images for you and also x2 images for retina devices. 
+We use jQuery to calculate the actual width of the image on your screen. Timthumb will create new pixel perfect images for you and also x2 images for retina devices. It is also possible to use any other timthumb parameter to manipulate your ne image.  
 #### 3. Result
 ```sh
 <img src="timthumb.php?src=yourimage.jpg&w=YOUR-RESPONSIVE-IMAGE-WIDTH">
