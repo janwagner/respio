@@ -25,17 +25,25 @@ http://dev.janwagner-design.de/respio/
 We need to remove the src attribute of your image and replace it by a new custom data attribute to prevent it from loading. Your images should have a max-width of 100% and should also be wider than your content/container.
 #### 2. Script
 ```sh
-$('[data-lazy-src]').each(function () {
-    var $img = $(this);
-    var $devicePixelRatio = 1;
-    if(window.devicePixelRatio > 1) {
-        $devicePixelRatio = window.devicePixelRatio
-    };
-    $imgWidth = $img.width() * $devicePixelRatio;
-    $img.attr('src',$img.data('lazy-src') + '&w=' + $imgWidth);
-    $img.removeAttr('data-lazy-src');
+function responsiveImages() {
+  $('[data-lazy-src]').each(function () {
+      var $img = $(this);
+      var $devicePixelRatio = 1;
+      if(window.devicePixelRatio > 1) {
+          $devicePixelRatio = window.devicePixelRatio
+      };
+      $imgWidth = $img.width() * $devicePixelRatio;
+      $img.attr('src',$img.data('lazy-src') + '&w=' + $imgWidth);
+  });
+}
+```
+We can also load a new generatrd image on window resize.  
+```sh
+$(window).on('resize', function() {
+    setTimeout(responsiveImages, 2000);
 });
 ```
+
 We use jQuery to calculate the actual width of the image on your screen. Timthumb will create new pixel perfect images for you and also x2 images for retina devices. It is also possible to use any other timthumb parameter to manipulate your ne image.  
 #### 3. Result
 ```sh
@@ -48,16 +56,17 @@ We use jQuery to calculate the actual width of the image on your screen. Timthum
 ```
 #### 2. Script
 ```sh
-$('[data-lazy-bg-src]').each(function () {
-    var $element = $(this);
-    var $devicePixelRatio = 1;
-    if(window.devicePixelRatio > 1) {
-        $devicePixelRatio = window.devicePixelRatio
-    };
-    $imgWidth = $element.width() * $devicePixelRatio;
-    $element.css('background-image', 'url(' + $element.data('lazy-bg-src') + '&w=' + $imgWidth);
-    $element.removeAttr('data-lazy-bg-src');
-});
+function responsiveImages() {
+  $('[data-lazy-bg-src]').each(function () {
+      var $element = $(this);
+      var $devicePixelRatio = 1;
+      if(window.devicePixelRatio > 1) {
+          $devicePixelRatio = window.devicePixelRatio
+      };
+      $imgWidth = $element.width() * $devicePixelRatio;
+      $element.css('background-image', 'url(' + $element.data('lazy-bg-src') + '&w=' + $imgWidth);
+  });
+}
 ```
 #### 3. Result
 ```sh
