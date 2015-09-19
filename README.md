@@ -64,7 +64,7 @@ function responsiveImages() {
           $devicePixelRatio = window.devicePixelRatio
       };
       $imgWidth = $element.width() * $devicePixelRatio;
-      $element.css('background-image', 'url(' + $element.data('lazy-bg-src') + '&w=' + $imgWidth);
+      $element.css('background-image', 'url(' + $element.data('lazy-bg-src') + '&w=' + $imgWidth + ')');
   });
 }
 ```
