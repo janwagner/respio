@@ -20,20 +20,20 @@ http://dev.janwagner-design.de/respio/
 ## Responsive images
 #### 1. Markup
 ```sh
-<img data-lazy-src="timthumb.php?src=yourimage.jpg" width="<?php echo getimagesize('yourimage.jpg')[0] ;?>">
+<img data-respio-img="timthumb.php?src=yourimage.jpg" width="<?php echo getimagesize('yourimage.jpg')[0] ;?>">
 ```
 We need to remove the src attribute of your image and replace it by a new custom data attribute to prevent it from loading. Your images should have a max-width of 100% and should also be wider than your content/container.
 #### 2. Script
 ```sh
 function responsiveImages() {
-  $('[data-lazy-src]').each(function () {
+  $('[data-respio-img]').each(function () {
       var $img = $(this);
       var $devicePixelRatio = 1;
       if(window.devicePixelRatio > 1) {
           $devicePixelRatio = window.devicePixelRatio
       };
       $imgWidth = $img.width() * $devicePixelRatio;
-      $img.attr('src',$img.data('lazy-src') + '&w=' + $imgWidth);
+      $img.attr('src',$img.data('respio-img') + '&w=' + $imgWidth);
   });
 }
 ```
@@ -52,19 +52,19 @@ We use jQuery to calculate the actual width of the image on your screen. Timthum
 ## Responsive background images
 #### 1. Markup
 ```sh
-<div data-lazy-bg-src="timthumb.php?src=yourimage.jpg">
+<div data-respio-bg="timthumb.php?src=yourimage.jpg">
 ```
 #### 2. Script
 ```sh
 function responsiveImages() {
-  $('[data-lazy-bg-src]').each(function () {
+  $('[data-respio-bg]').each(function () {
       var $element = $(this);
       var $devicePixelRatio = 1;
       if(window.devicePixelRatio > 1) {
           $devicePixelRatio = window.devicePixelRatio
       };
       $imgWidth = $element.width() * $devicePixelRatio;
-      $element.css('background-image', 'url(' + $element.data('lazy-bg-src') + '&w=' + $imgWidth + ')');
+      $element.css('background-image', 'url(' + $element.data('respio-bg') + '&w=' + $imgWidth + ')');
   });
 }
 ```
