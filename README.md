@@ -37,7 +37,7 @@ function responsiveImages() {
   });
 }
 ```
-We can also load a new generatrd image on window resize.  
+We can also load a new generated image, everytime we resize the window.  
 ```sh
 $(window).on('resize', function() {
     setTimeout(responsiveImages, 2000);
