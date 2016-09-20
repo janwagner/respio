@@ -41,7 +41,6 @@
                           };
                           $imgWidth = $img.parent().width() * $devicePixelRatio;
                           $img.attr('src', $url + $img.data('respio-img') + '&container=focus&refresh=604800&resize_w=' + $imgWidth);
-                          $img.removeAttr('data-respio-img');
                         });
 
                     }

@@ -45,7 +45,6 @@
                             };
                             $elementWidth = $element.width() * $devicePixelRatio;
                             $element.css('background-image', 'url(' + $url + $element.data('respio-bg') + '&container=focus&refresh=604800&resize_w=' + $elementWidth + ')');
-                            $element.removeAttr('data-respio-bg');
                         });
 
                     }

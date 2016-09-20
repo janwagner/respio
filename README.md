@@ -1,5 +1,6 @@
 # Respio
-An easy way of having pixel perfect responsive images on every device.
+Pixel perfect responsive images on every device.
+Let Google cache your images シ
 
   - Retina ready
   - No 3rd party cloud service needed
