@@ -55,7 +55,7 @@
 
     <body>
         <div id="wrapper">
-            <img data-respio-img="http://dev.janwagner-design.de/respio2/image.jpg">
+            <img data-respio-img="http://dev.janwagner-design.de/respio/image.jpg">
         </div>
     </body>
 
