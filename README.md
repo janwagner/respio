@@ -6,74 +6,62 @@ An easy way of having pixel perfect responsive images on every device.
   - Works with images and background images
 
 ### Version
-1.0.0
+2.0.0
 
 ### Demo
 http://dev.janwagner-design.de/respio/
 
 ### Requires
 
-* [php]
 * [jQuery]
-* [Timthumb] - or any other php image resize alternative
 
 ## Responsive images
 #### 1. Markup
 ```sh
-<img data-respio-img="timthumb.php?src=yourimage.jpg" width="<?php echo getimagesize('yourimage.jpg')[0] ;?>">
+<img data-respio-img="http://dev.janwagner-design.de/respio/image.jpg">
 ```
 We need to remove the src attribute of your image and replace it by a new custom data attribute to prevent it from loading. Your images should have a max-width of 100% and should also be wider than your content/container.
 #### 2. Script
 ```sh
 function responsiveImages() {
-  $('[data-respio-img]').each(function () {
-      var $img = $(this);
-      var $devicePixelRatio = 1;
-      if(window.devicePixelRatio > 1) {
-          $devicePixelRatio = window.devicePixelRatio
-      };
-      $imgWidth = $img.width() * $devicePixelRatio;
-      $img.attr('src',$img.data('respio-img') + '&w=' + $imgWidth);
-  });
+    $('[data-respio-img]').each(function () {
+        $img = $(this);
+        $url = "https://images1-focus-opensocial.googleusercontent.com/gadgets/proxy?url="
+        $devicePixelRatio = 1;
+        if(window.devicePixelRatio > 1) {
+            $devicePixelRatio = window.devicePixelRatio
+        };
+        imgWidth = $img.parent().width() * $devicePixelRatio;
+        $img.attr('src', $url + $img.data('respio-img') + '&container=focus&refresh=604800&resize_w=' + $imgWidth);
+    });
 }
 ```
-We can also load a new generated image, everytime we resize the window.  
+We can also load a new generated image, everytime we resize the window.
 ```sh
 $(window).on('resize', function() {
-    setTimeout(responsiveImages, 2000);
+    setTimeout(responsiveImages, 100);
 });
 ```
 
-We use jQuery to calculate the actual width of the image on your screen. Timthumb will create new pixel perfect images for you and also x2 images for retina devices. It is also possible to use any other timthumb parameter to manipulate your ne image.  
-#### 3. Result
-```sh
-<img src="timthumb.php?src=yourimage.jpg&w=YOUR-RESPONSIVE-IMAGE-WIDTH">
-```
 ## Responsive background images
 #### 1. Markup
 ```sh
-<div data-respio-bg="timthumb.php?src=yourimage.jpg">
+<div data-respio-bg="http://dev.janwagner-design.de/respio/image.jpg"></div>
 ```
 #### 2. Script
 ```sh
 function responsiveImages() {
-  $('[data-respio-bg]').each(function () {
-      var $element = $(this);
-      var $devicePixelRatio = 1;
-      if(window.devicePixelRatio > 1) {
-          $devicePixelRatio = window.devicePixelRatio
-      };
-      $imgWidth = $element.width() * $devicePixelRatio;
-      $element.css('background-image', 'url(' + $element.data('respio-bg') + '&w=' + $imgWidth + ')');
-  });
+    $('[data-respio-bg]').each(function () {
+        $element = $(this);
+        $url = "https://images1-focus-opensocial.googleusercontent.com/gadgets/proxy?url="
+        $devicePixelRatio = 1;
+        if(window.devicePixelRatio > 1) {
+            $devicePixelRatio = window.devicePixelRatio
+        };
+        $elementWidth = $element.width() * $devicePixelRatio;
+        $element.css('background-image', 'url(' + $url + $element.data('respio-bg') + '&container=focus&refresh=604800&resize_w=' + $elementWidth + ')');
+    });
 }
 ```
-#### 3. Result
-```sh
-<div style="background-image:url(timthumb.php?src=yourimage.jpg&w=YOUR-RESPONSIVE-IMAGE-WIDTH)">
-```
-
-[//]: # 
-   [timthumb]: <http://www.binarymoon.co.uk/2010/08/timthumb/>
+[//]: #
    [jQuery]: <http://jquery.com/>
-   [php]: <https://secure.php.net/>
