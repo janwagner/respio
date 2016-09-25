@@ -10,9 +10,9 @@ Let Google cache your images シ
 2.1.0
 
 ### Demo
-  - Respsonsive Images: http://dev.janwagner-design.de/respio/demo_responsive_image.html
-  - Respsonsive Background Images: http://dev.janwagner-design.de/respio/demo_responsive_background_image.html
-  - Respsonsive Lazyloaded Images: http://dev.janwagner-design.de/respio/demo_lazyload_responsive_image.html
+  - [Respsonsive Images](http://dev.janwagner-design.de/respio/demo_responsive_image.html)
+  - [Respsonsive Background Images](http://dev.janwagner-design.de/respio/demo_responsive_background_image.html)
+  - [Respsonsive Lazyloaded Images](http://dev.janwagner-design.de/respio/demo_lazyload_responsive_image.html)
 
 ### Requires
 
