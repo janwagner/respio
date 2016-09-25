@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta content="width=device-width,initial-scale=1,user-scalable=no" name="viewport">
+        <title>Respio - Responsive Background Images</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+        <style type="text/css">
+            body {
+                padding: 20px;
+            }
+            #wrapper {
+                margin: 0 auto;
+                max-width: 980px;
+            }
+            img {
+                display: block;
+                margin: 0;
+                max-width: 100%;
+                width: 100%;
+            }
+            div {
+                width: 980px;
+                height: 656px;
+            }
+        </style>
+
+        <script>
+
+            (function ($) {
+
+                $(window).on('load', responsiveImages);
+
+                function responsiveImages() {
+
+                    $('[data-respio-bg]').each(function () {
+
+                        // img
+                        $el = $(this);
+
+                        // google code
+                        $lib = "https://images1-focus-opensocial.googleusercontent.com/gadgets/proxy?url="
+
+                        // retina or not
+                        $devicePixelRatio = 1;
+                        if(window.devicePixelRatio > 1) { $devicePixelRatio = window.devicePixelRatio };
+
+                        // get img width
+                        $width = $el.width() * $devicePixelRatio;
+
+                        // set img url
+                        $el.css('background-image', 'url(' + $lib + $el.data('respio-bg') + '&container=focus&refresh=604800&resize_w=' + $width + ')');
+
+                        // removeAttr
+                        $el.removeAttr('data-respio-bg');
+                    });
+
+                }
+            })(jQuery);
+
+        </script>
+
+    </head>
+
+    <body>
+        <div id="wrapper">
+            <div data-respio-bg="http://dev.janwagner-design.de/respio/image.jpg"></div>
+        </div>
+    </body>
+
+</html>
