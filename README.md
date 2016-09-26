@@ -36,6 +36,10 @@ function googleProxy(width, refresh, url) {
 ```
 #### 3. Script
 ```sh
+
+$(window).on('load', responsiveImages);
+$(window).on('scroll', responsiveImages);
+
 function responsiveImages() {
     $.each($('img[data-respio-src]'), function(i, img){
         $(img).attr('src', googleProxy(10, 31536000, $(img).data('respio-src')));
