@@ -4,6 +4,7 @@ THX to the Google cache シ
 
   - Retina ready
   - Pixelated placeholder
+  - Lazyloading
   - Works with images and background images
 
 ### Version
