@@ -1,18 +1,17 @@
 # Respio
 Pixel perfect responsive images on every device.
-Let Google cache your images シ
+THX to the Google cache シ
 
   - Retina ready
-  - No 3rd party cloud service needed
+  - Pixelated placeholder
   - Works with images and background images
 
 ### Version
-2.1.0
+2.2.0
 
 ### Demo
   - [Respsonsive Images](http://dev.janwagner-design.de/respio/demo_responsive_image.html)
   - [Respsonsive Background Images](http://dev.janwagner-design.de/respio/demo_responsive_background_image.html)
-  - [Respsonsive Lazyloaded Images](http://dev.janwagner-design.de/respio/demo_lazyload_responsive_image.html)
 
 ### Requires
 
@@ -24,36 +23,35 @@ Let Google cache your images シ
 <img data-respio-img="http://dev.janwagner-design.de/respio/image.jpg">
 ```
 We need to remove the src attribute of your image and replace it by a new custom data attribute to prevent it from loading. Your images should have a max-width of 100% and should also be wider than your content/container.
-#### 2. Script
+#### 2. Google Proxy Magic (THX to @coolaj86)
 ```sh
-$(window).on('load', responsiveImages);
-    $(window).on('resize', function() {
-        setTimeout(responsiveImages, 1000);
+function googleProxy(width, refresh, url) {
+    return 'https://images1-focus-opensocial.googleusercontent.com/gadgets/proxy'
+    + '?container=focus'
+    + '&refresh=' + refresh
+    + '&resize_w=' + width
+    + '&url=' + url
+    ;
+}
+```
+#### 3. Script
+```sh
+function responsiveImages() {
+    $.each($('img[data-respio-src]'), function(i, img){
+        $(img).attr('src', googleProxy(10, 31536000, $(img).data('respio-src')));
+        $devicePixelRatio = (window.devicePixelRatio > 1) ? window.devicePixelRatio : 1;
+        setTimeout( function() {
+            $imgTop = $(img).offset().top;
+            $windowBottom = $(window).scrollTop() + $(window).height();
+            if($imgTop < $windowBottom) {
+                $imgWidth = $(img).parent().width() * $devicePixelRatio;
+                $(img).attr('src', googleProxy($imgWidth, 2592000, $(img).data('respio-src')));
+                $(img).removeAttr('data-respio-src');
+            }
+        },250 + ( i * 250 ));
     });
-    function responsiveImages() {
-        $('[data-respio-img]').each(function () {
-            // img
-            $img = $(this);
-            // google code
-            $lib = "https://images1-focus-opensocial.googleusercontent.com/gadgets/proxy?url="
-            // retina or not
-            $devicePixelRatio = 1;
-            if(window.devicePixelRatio > 1) { $devicePixelRatio = window.devicePixelRatio };
-            // get img width
-            $imgWidth = $img.parent().width() * $devicePixelRatio;
-            // set img src
-            $img.attr('src', $lib + $img.data('respio-img') + '&container=focus&refresh=604800&resize_w=' + $imgWidth);
-        });
-    }
-})(jQuery);
+}
 ```
-We can also load a new generated image, everytime we resize the window.
-```sh
-$(window).on('resize', function() {
-    setTimeout(responsiveImages, 100);
-});
-```
-
 ## Responsive background images
 #### 1. Markup
 ```sh
@@ -61,69 +59,19 @@ $(window).on('resize', function() {
 ```
 #### 2. Script
 ```sh
-(function ($) {
-    $(window).on('load', responsiveImages);
-    function responsiveImages() {
-        $('[data-respio-bg]').each(function () {
-            // img
-            $el = $(this);
-            // google code
-            $lib = "https://images1-focus-opensocial.googleusercontent.com/gadgets/proxy?url="
-            // retina or not
-            $devicePixelRatio = 1;
-            if(window.devicePixelRatio > 1) { $devicePixelRatio = window.devicePixelRatio };
-            // get img width
-            $width = $el.width() * $devicePixelRatio;
-            // set img url
-            $el.css('background-image', 'url(' + $lib + $el.data('respio-bg') + '&container=focus&refresh=604800&resize_w=' + $width + ')');
-            // removeAttr
-            $el.removeAttr('data-respio-bg');
-        });
-    }
-})(jQuery);
-```
-## Lazyloaded images
-#### 1. Markup
-```sh
-<div data-respio-src="http://dev.janwagner-design.de/respio/image.jpg"></div>
-```
-#### 2. Script
-```sh
-(function ($) {
-
-    $(window).on('load', responsiveImages);
-    $(window).on('scroll', responsiveImages);
-
-    function responsiveImages() {
-
-        $('img[data-respio-src]').each(function () {
-            // img
-            $el = $(this);
-            // google code
-            $lib = "https://images1-focus-opensocial.googleusercontent.com/gadgets/proxy?url="
-            // visible or not
-            $elTop = $el.offset().top;
-            $elBottom = $el.offset().top + $el.outerHeight();
+function responsiveImages() {
+    $.each($('[data-respio-bg]'), function(i, el){
+        $(el).css('background-image', 'url(' + googleProxy(10, 31536000, $(el).data('respio-bg')) + ')')
+        $devicePixelRatio = (window.devicePixelRatio > 1) ? window.devicePixelRatio : 1;
+        setTimeout( function() {
+            $imgTop = $(el).offset().top;
             $windowBottom = $(window).scrollTop() + $(window).height();
-            // retina or not
-            $devicePixelRatio = 1;
-            if(window.devicePixelRatio > 1) { $devicePixelRatio = window.devicePixelRatio };
-            if($elTop < $windowBottom) {
-                // set image width
-                $imgWidth = $el.parent().width() * $devicePixelRatio;
-                // set img src
-                $el.attr('src', $lib + $el.data('respio-src') + '&container=focus&refresh=604800&resize_w=' + $imgWidth);
-                // removeAttr
-                $el.removeAttr('data-respio-src');
-            } else {
-                // pixelated placeholder
-                $imgWidth = 10;
-                // set img src
-                $el.attr('src', $lib + $el.data('respio-src') + '&container=focus&refresh=604800&resize_w=' + $imgWidth);
+            if($imgTop < $windowBottom) {
+                $imgWidth = $(el).width() * $devicePixelRatio;
+                $(el).css('background-image', 'url(' + googleProxy($imgWidth, 2592000, $(el).data('respio-bg')) + ')')
+                $(el).removeAttr('data-respio-bg');
             }
-        });
-    }
-})(jQuery);
+        },250 + ( i * 250 ));
+    });
+}
 ```
-[//]: #
-   [jQuery]: <http://jquery.com/>
