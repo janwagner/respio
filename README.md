@@ -8,11 +8,11 @@ THX to the Google cache シ
   - Works with images and background images
 
 ### Version
-2.2.0
+2.3.0
 
 ### Demo
-  - [Respsonsive Images](http://dev.janwagner-design.de/respio/demo_responsive_image.html)
-  - [Respsonsive Background Images](http://dev.janwagner-design.de/respio/demo_responsive_background_image.html)
+  - [Responsive Images](http://dev.janwagner-design.de/respio/demo_responsive_image.html)
+  - [Responsive Background Images](http://dev.janwagner-design.de/respio/demo_responsive_background_image.html)
 
 ### Requires
 
@@ -42,19 +42,46 @@ $(window).on('load', responsiveImages);
 $(window).on('scroll', responsiveImages);
 
 function responsiveImages() {
-    $.each($('img[data-respio-src]'), function(i, img){
-        $(img).attr('src', googleProxy(10, 31536000, $(img).data('respio-src')));
-        $devicePixelRatio = (window.devicePixelRatio > 1) ? window.devicePixelRatio : 1;
-        setTimeout( function() {
-            $imgTop = $(img).offset().top;
-            $windowBottom = $(window).scrollTop() + $(window).height();
-            if($imgTop < $windowBottom) {
-                $imgWidth = $(img).parent().width() * $devicePixelRatio;
-                $(img).attr('src', googleProxy($imgWidth, 2592000, $(img).data('respio-src')));
-                $(img).removeAttr('data-respio-src');
-            }
-        },250 + ( i * 250 ));
+
+    var windowBottom = $(window).scrollTop() + $(window).height();
+
+    $.each($('img[data-respio-src]'), function(img) {
+        var $img = $(img);
+
+        var smallImgUrl = googleProxy(10, 604800, $img.data('respio-src'));
+        var $smallImg = $img.attr('src', smallImgUrl);
+
+        setTimeout(function() {
+            var imgTop = $img.offset().top;
+
+            if(imgTop >= windowBottom * 1.5) { return; }
+
+            var devicePixelRatio = (window.devicePixelRatio > 1) ? window.devicePixelRatio : 1;
+            var imgWidth = $img.parent().width() * devicePixelRatio;
+
+            var originUrl = $img.data('respio-src');
+            var largeImgUrl = googleProxy(imgWidth, 604800, originUrl);
+            var $largeImg = $('<img/>').hide().appendTo($('body'));
+
+            var isLoaded = false;
+            var isResized = false;
+
+            var largeImg = $largeImg.get(0);
+            largeImg.onload = function() { isLoaded = true; };
+            largeImg.src = largeImgUrl;
+
+            var waitInterval = setInterval(function() {
+                if (isLoaded) {
+                    clearInterval(waitInterval);
+                    $smallImg.attr('src', largeImgUrl);
+                    $largeImg.remove();
+                    $smallImg.removeAttr('data-respio-src');
+                    $smallImg.css('height', '');
+                }
+            }, 0);
+        }, 0);
     });
+
 }
 ```
 ## Responsive background images
@@ -64,19 +91,49 @@ function responsiveImages() {
 ```
 #### 2. Script
 ```sh
+$(window).on('load', responsiveImages);
+$(window).on('scroll', responsiveImages);
+
 function responsiveImages() {
-    $.each($('[data-respio-bg]'), function(i, el){
-        $(el).css('background-image', 'url(' + googleProxy(10, 31536000, $(el).data('respio-bg')) + ')')
-        $devicePixelRatio = (window.devicePixelRatio > 1) ? window.devicePixelRatio : 1;
-        setTimeout( function() {
-            $imgTop = $(el).offset().top;
-            $windowBottom = $(window).scrollTop() + $(window).height();
-            if($imgTop < $windowBottom) {
-                $imgWidth = $(el).width() * $devicePixelRatio;
-                $(el).css('background-image', 'url(' + googleProxy($imgWidth, 2592000, $(el).data('respio-bg')) + ')')
-                $(el).removeAttr('data-respio-bg');
-            }
-        },250 + ( i * 250 ));
+
+    var windowBottom = $(window).scrollTop() + $(window).height();
+
+    $.each($('img[data-respio-bg]'), function(img) {
+        var $img = $(img);
+
+        var smallImgUrl = googleProxy(10, 604800, $img.data('respio-src'));
+        var $smallImg = $img.css('background-image', 'url(' + smallImgUrl + ')');
+
+        setTimeout(function() {
+            var imgTop = $img.offset().top;
+
+            if(imgTop >= windowBottom * 1.5) { return; }
+
+            var devicePixelRatio = (window.devicePixelRatio > 1) ? window.devicePixelRatio : 1;
+            var imgWidth = $img.parent().width() * devicePixelRatio;
+
+            var originUrl = $img.data('respio-src');
+            var largeImgUrl = googleProxy(imgWidth, 604800, originUrl);
+            var $largeImg = $('<img/>').hide().appendTo($('body'));
+
+            var isLoaded = false;
+            var isResized = false;
+
+            var largeImg = $largeImg.get(0);
+            largeImg.onload = function() { isLoaded = true; };
+            largeImg.src = largeImgUrl;
+
+            var waitInterval = setInterval(function() {
+                if (isLoaded) {
+                    clearInterval(waitInterval);
+                    $smallImg.css('background-image', 'url(' + largeImgUrl + ')');
+                    $largeImg.remove();
+                    $smallImg.removeAttr('data-respio-bg');
+                    $smallImg.css('height', '');
+                }
+            }, 0);
+        }, 0);
     });
+
 }
 ```

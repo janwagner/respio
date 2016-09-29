@@ -41,7 +41,7 @@
 
                 function responsiveImages() {
 
-                    $.each($('img[data-respio-src]'), function(i, img){
+                    $.each($('img[data-respio-src]'), function(img){
 
                         // set pixelated placeholder
                         $(img).attr('src', googleProxy(10, 31536000, $(img).data('respio-src')));
