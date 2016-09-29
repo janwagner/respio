@@ -46,8 +46,8 @@
                     $.each($('img[data-respio-src]'), function(i, img) {
                         var $img = $(img);
 
-                        var smallImgUrl = googleProxy(10, 604800, $img.data('respio-src'));
-                        var $smallImg = $img.attr('src', smallImgUrl);
+                        var thumbUrl = googleProxy(10, 604800, $img.data('respio-src'));
+                        $img.attr('src', thumbUrl);
 
                         setTimeout(function() {
                             var imgTop = $img.offset().top;
@@ -71,10 +71,10 @@
                             var waitInterval = setInterval(function() {
                                 if (isLoaded) {
                                     clearInterval(waitInterval);
-                                    $smallImg.attr('src', largeImgUrl);
+                                    $img.attr('src', largeImgUrl);
                                     $largeImg.remove();
-                                    $smallImg.removeAttr('data-respio-src');
-                                    $smallImg.css('height', '');
+                                    $img.removeAttr('data-respio-src');
+                                    $img.css('height', '');
                                 }
                             }, 0);
                         }, 0);

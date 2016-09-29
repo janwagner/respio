@@ -43,11 +43,11 @@
 
                     var windowBottom = $(window).scrollTop() + $(window).height();
 
-                    $.each($('img[data-respio-bg]'), function(img) {
+                    $.each($('[data-respio-bg]'), function(i, img) {
                         var $img = $(img);
 
-                        var smallImgUrl = googleProxy(10, 604800, $img.data('respio-src'));
-                        var $smallImg = $img.css('background-image', 'url(' + smallImgUrl + ')');
+                        var thumbUrl = googleProxy(10, 604800, $img.data('respio-bg'));
+                        $img.css('background-image', 'url(' + thumbUrl + ')');
 
                         setTimeout(function() {
                             var imgTop = $img.offset().top;
@@ -57,7 +57,7 @@
                             var devicePixelRatio = (window.devicePixelRatio > 1) ? window.devicePixelRatio : 1;
                             var imgWidth = $img.parent().width() * devicePixelRatio;
 
-                            var originUrl = $img.data('respio-src');
+                            var originUrl = $img.data('respio-bg');
                             var largeImgUrl = googleProxy(imgWidth, 604800, originUrl);
                             var $largeImg = $('<img/>').hide().appendTo($('body'));
 
@@ -71,10 +71,10 @@
                             var waitInterval = setInterval(function() {
                                 if (isLoaded) {
                                     clearInterval(waitInterval);
-                                    $smallImg.css('background-image', 'url(' + largeImgUrl + ')');
+                                    $img.css('background-image', 'url(' + largeImgUrl + ')');
                                     $largeImg.remove();
-                                    $smallImg.removeAttr('data-respio-bg');
-                                    $smallImg.css('height', '');
+                                    $img.removeAttr('data-respio-bg');
+                                    $img.css('height', '');
                                 }
                             }, 0);
                         }, 0);

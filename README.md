@@ -41,15 +41,24 @@ function googleProxy(width, refresh, url) {
 $(window).on('load', responsiveImages);
 $(window).on('scroll', responsiveImages);
 
+function googleProxy(width, refresh, url) {
+    return 'https://images1-focus-opensocial.googleusercontent.com/gadgets/proxy'
+    - '?container=focus'
+    - '&refresh=' + refresh
+    - '&resize_w=' + width
+    - '&url=' + url
+    ;
+}
+
 function responsiveImages() {
 
     var windowBottom = $(window).scrollTop() + $(window).height();
 
-    $.each($('img[data-respio-src]'), function(img) {
+    $.each($('img[data-respio-src]'), function(i, img) {
         var $img = $(img);
 
-        var smallImgUrl = googleProxy(10, 604800, $img.data('respio-src'));
-        var $smallImg = $img.attr('src', smallImgUrl);
+        var thumbUrl = googleProxy(10, 604800, $img.data('respio-src'));
+        $img.attr('src', thumbUrl);
 
         setTimeout(function() {
             var imgTop = $img.offset().top;
@@ -73,10 +82,10 @@ function responsiveImages() {
             var waitInterval = setInterval(function() {
                 if (isLoaded) {
                     clearInterval(waitInterval);
-                    $smallImg.attr('src', largeImgUrl);
+                    $img.attr('src', largeImgUrl);
                     $largeImg.remove();
-                    $smallImg.removeAttr('data-respio-src');
-                    $smallImg.css('height', '');
+                    $img.removeAttr('data-respio-src');
+                    $img.css('height', '');
                 }
             }, 0);
         }, 0);
@@ -94,15 +103,24 @@ function responsiveImages() {
 $(window).on('load', responsiveImages);
 $(window).on('scroll', responsiveImages);
 
+function googleProxy(width, refresh, url) {
+    return 'https://images1-focus-opensocial.googleusercontent.com/gadgets/proxy'
+    - '?container=focus'
+    - '&refresh=' + refresh
+    - '&resize_w=' + width
+    - '&url=' + url
+    ;
+}
+
 function responsiveImages() {
 
     var windowBottom = $(window).scrollTop() + $(window).height();
 
-    $.each($('img[data-respio-bg]'), function(img) {
+    $.each($('[data-respio-bg]'), function(i, img) {
         var $img = $(img);
 
-        var smallImgUrl = googleProxy(10, 604800, $img.data('respio-src'));
-        var $smallImg = $img.css('background-image', 'url(' + smallImgUrl + ')');
+        var thumbUrl = googleProxy(10, 604800, $img.data('respio-bg'));
+        $img.css('background-image', 'url(' + thumbUrl + ')');
 
         setTimeout(function() {
             var imgTop = $img.offset().top;
@@ -112,7 +130,7 @@ function responsiveImages() {
             var devicePixelRatio = (window.devicePixelRatio > 1) ? window.devicePixelRatio : 1;
             var imgWidth = $img.parent().width() * devicePixelRatio;
 
-            var originUrl = $img.data('respio-src');
+            var originUrl = $img.data('respio-bg');
             var largeImgUrl = googleProxy(imgWidth, 604800, originUrl);
             var $largeImg = $('<img/>').hide().appendTo($('body'));
 
@@ -126,10 +144,10 @@ function responsiveImages() {
             var waitInterval = setInterval(function() {
                 if (isLoaded) {
                     clearInterval(waitInterval);
-                    $smallImg.css('background-image', 'url(' + largeImgUrl + ')');
+                    $img.css('background-image', 'url(' + largeImgUrl + ')');
                     $largeImg.remove();
-                    $smallImg.removeAttr('data-respio-bg');
-                    $smallImg.css('height', '');
+                    $img.removeAttr('data-respio-bg');
+                    $img.css('height', '');
                 }
             }, 0);
         }, 0);
