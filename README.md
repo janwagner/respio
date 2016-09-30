@@ -57,8 +57,10 @@ function responsiveImages() {
     $.each($('img[data-respio-src]'), function(i, img) {
         var $img = $(img);
 
-        var thumbUrl = googleProxy(10, 604800, $img.data('respio-src'));
-        $img.attr('src', thumbUrl);
+        if($img.attr('src', '')) {
+            var thumbUrl = googleProxy(10, 604800, $img.data('respio-src'));
+            $img.attr('src', thumbUrl);
+        }
 
         setTimeout(function() {
             var imgTop = $img.offset().top;
@@ -73,7 +75,6 @@ function responsiveImages() {
             var $largeImg = $('<img/>').hide().appendTo($('body'));
 
             var isLoaded = false;
-            var isResized = false;
 
             var largeImg = $largeImg.get(0);
             largeImg.onload = function() { isLoaded = true; };
@@ -119,8 +120,10 @@ function responsiveImages() {
     $.each($('[data-respio-bg]'), function(i, img) {
         var $img = $(img);
 
-        var thumbUrl = googleProxy(10, 604800, $img.data('respio-bg'));
-        $img.css('background-image', 'url(' + thumbUrl + ')');
+        if($img.css('background-image', '')) {
+            var smallImgUrl = googleProxy(10, 604800, $img.data('respio-src'));
+            var $smallImg = $img.css('background-image', 'url(' + smallImgUrl + ')');
+        }
 
         setTimeout(function() {
             var imgTop = $img.offset().top;
@@ -128,14 +131,13 @@ function responsiveImages() {
             if(imgTop >= windowBottom * 1.5) { return; }
 
             var devicePixelRatio = (window.devicePixelRatio > 1) ? window.devicePixelRatio : 1;
-            var imgWidth = $img.parent().width() * devicePixelRatio;
+            var imgWidth = $img.width() * devicePixelRatio;
 
             var originUrl = $img.data('respio-bg');
             var largeImgUrl = googleProxy(imgWidth, 604800, originUrl);
             var $largeImg = $('<img/>').hide().appendTo($('body'));
 
             var isLoaded = false;
-            var isResized = false;
 
             var largeImg = $largeImg.get(0);
             largeImg.onload = function() { isLoaded = true; };
