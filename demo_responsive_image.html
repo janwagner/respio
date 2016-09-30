@@ -46,8 +46,10 @@
                     $.each($('img[data-respio-src]'), function(i, img) {
                         var $img = $(img);
 
-                        var thumbUrl = googleProxy(10, 604800, $img.data('respio-src'));
-                        $img.attr('src', thumbUrl);
+                        if($img.attr('src', '')) {
+                            var thumbUrl = googleProxy(10, 604800, $img.data('respio-src'));
+                            $img.attr('src', thumbUrl);
+                        }
 
                         setTimeout(function() {
                             var imgTop = $img.offset().top;

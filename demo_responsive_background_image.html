@@ -43,11 +43,13 @@
 
                     var windowBottom = $(window).scrollTop() + $(window).height();
 
-                    $.each($('[data-respio-bg]'), function(i, img) {
+                    $.each($('img[data-respio-bg]'), function(img) {
                         var $img = $(img);
 
-                        var thumbUrl = googleProxy(10, 604800, $img.data('respio-bg'));
-                        $img.css('background-image', 'url(' + thumbUrl + ')');
+                        if($img.css('background-image', '')) {
+                            var smallImgUrl = googleProxy(10, 604800, $img.data('respio-bg'));
+                            var $smallImg = $img.css('background-image', 'url(' + smallImgUrl + ')');
+                        }
 
                         setTimeout(function() {
                             var imgTop = $img.offset().top;
@@ -55,7 +57,7 @@
                             if(imgTop >= windowBottom * 1.5) { return; }
 
                             var devicePixelRatio = (window.devicePixelRatio > 1) ? window.devicePixelRatio : 1;
-                            var imgWidth = $img.parent().width() * devicePixelRatio;
+                            var imgWidth = $img.width() * devicePixelRatio;
 
                             var originUrl = $img.data('respio-bg');
                             var largeImgUrl = googleProxy(imgWidth, 604800, originUrl);
@@ -71,10 +73,10 @@
                             var waitInterval = setInterval(function() {
                                 if (isLoaded) {
                                     clearInterval(waitInterval);
-                                    $img.css('background-image', 'url(' + largeImgUrl + ')');
+                                    $smallImg.css('background-image', 'url(' + largeImgUrl + ')');
                                     $largeImg.remove();
-                                    $img.removeAttr('data-respio-bg');
-                                    $img.css('height', '');
+                                    $smallImg.removeAttr('data-respio-bg');
+                                    $smallImg.css('height', '');
                                 }
                             }, 0);
                         }, 0);

@@ -75,6 +75,7 @@ function responsiveImages() {
             var $largeImg = $('<img/>').hide().appendTo($('body'));
 
             var isLoaded = false;
+            var isResized = false;
 
             var largeImg = $largeImg.get(0);
             largeImg.onload = function() { isLoaded = true; };
@@ -117,11 +118,11 @@ function responsiveImages() {
 
     var windowBottom = $(window).scrollTop() + $(window).height();
 
-    $.each($('[data-respio-bg]'), function(i, img) {
+    $.each($('img[data-respio-bg]'), function(img) {
         var $img = $(img);
 
         if($img.css('background-image', '')) {
-            var smallImgUrl = googleProxy(10, 604800, $img.data('respio-src'));
+            var smallImgUrl = googleProxy(10, 604800, $img.data('respio-bg'));
             var $smallImg = $img.css('background-image', 'url(' + smallImgUrl + ')');
         }
 
@@ -138,6 +139,7 @@ function responsiveImages() {
             var $largeImg = $('<img/>').hide().appendTo($('body'));
 
             var isLoaded = false;
+            var isResized = false;
 
             var largeImg = $largeImg.get(0);
             largeImg.onload = function() { isLoaded = true; };
@@ -146,10 +148,10 @@ function responsiveImages() {
             var waitInterval = setInterval(function() {
                 if (isLoaded) {
                     clearInterval(waitInterval);
-                    $img.css('background-image', 'url(' + largeImgUrl + ')');
+                    $smallImg.css('background-image', 'url(' + largeImgUrl + ')');
                     $largeImg.remove();
-                    $img.removeAttr('data-respio-bg');
-                    $img.css('height', '');
+                    $smallImg.removeAttr('data-respio-bg');
+                    $smallImg.css('height', '');
                 }
             }, 0);
         }, 0);
