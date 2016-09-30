@@ -43,10 +43,10 @@ $(window).on('scroll', responsiveImages);
 
 function googleProxy(width, refresh, url) {
     return 'https://images1-focus-opensocial.googleusercontent.com/gadgets/proxy'
-    - '?container=focus'
-    - '&refresh=' + refresh
-    - '&resize_w=' + width
-    - '&url=' + url
+    + '?container=focus'
+    + '&refresh=' + refresh
+    + '&resize_w=' + width
+    + '&url=' + url
     ;
 }
 
