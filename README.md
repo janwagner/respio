@@ -98,7 +98,8 @@ function responsiveImages() {
 ## Responsive background images
 #### 1. Markup
 ```sh
-<div data-respio-bg="http://dev.janwagner-design.de/respio/image.jpg"></div>
+<div data-respio-bg="http://dev.janwagner-design.de/respio/image.jpg" width="xxx" height="xxx"></div>
+width and height required
 ```
 #### 2. Script
 ```sh
