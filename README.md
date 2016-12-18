@@ -71,21 +71,21 @@ function responsiveImages() {
             var imgWidth = $img.parent().width() * devicePixelRatio;
 
             var originUrl = $img.data('respio-src');
-            var largeImgUrl = googleProxy(imgWidth, 604800, originUrl);
-            var $largeImg = $('<img/>').hide().appendTo($('body'));
+            var originImgUrl = googleProxy(imgWidth, 604800, originUrl);
+            var $originImg = $('<img/>').hide().appendTo($('body'));
 
             var isLoaded = false;
             var isResized = false;
 
-            var largeImg = $largeImg.get(0);
-            largeImg.onload = function() { isLoaded = true; };
-            largeImg.src = largeImgUrl;
+            var originImg = $originImg.get(0);
+            originImg.onload = function() { isLoaded = true; };
+            originImg.src = originImgUrl;
 
             var waitInterval = setInterval(function() {
                 if (isLoaded) {
                     clearInterval(waitInterval);
-                    $img.attr('src', largeImgUrl);
-                    $largeImg.remove();
+                    $img.attr('src', originImgUrl);
+                    $originImg.remove();
                     $img.removeAttr('data-respio-src');
                     $img.css('height', '');
                 }
@@ -118,13 +118,11 @@ function responsiveImages() {
 
     var windowBottom = $(window).scrollTop() + $(window).height();
 
-    $.each($('img[data-respio-bg]'), function(img) {
+    $.each($('[data-respio-bg]'), function(i, img) {
         var $img = $(img);
 
-        if($img.css('background-image', '')) {
-            var smallImgUrl = googleProxy(10, 604800, $img.data('respio-bg'));
-            var $smallImg = $img.css('background-image', 'url(' + smallImgUrl + ')');
-        }
+        var thumbUrl = googleProxy(10, 604800, $img.data('respio-bg'));
+        $img.css('background-image', 'url(' + thumbUrl + ')');
 
         setTimeout(function() {
             var imgTop = $img.offset().top;
@@ -132,26 +130,26 @@ function responsiveImages() {
             if(imgTop >= windowBottom * 1.5) { return; }
 
             var devicePixelRatio = (window.devicePixelRatio > 1) ? window.devicePixelRatio : 1;
-            var imgWidth = $img.width() * devicePixelRatio;
+            var imgWidth = $img.parent().width() * devicePixelRatio;
 
             var originUrl = $img.data('respio-bg');
-            var largeImgUrl = googleProxy(imgWidth, 604800, originUrl);
-            var $largeImg = $('<img/>').hide().appendTo($('body'));
+            var originImgUrl = googleProxy(imgWidth, 604800, originUrl);
+            var $originImg = $('<img/>').hide().appendTo($('body'));
 
             var isLoaded = false;
             var isResized = false;
 
-            var largeImg = $largeImg.get(0);
-            largeImg.onload = function() { isLoaded = true; };
-            largeImg.src = largeImgUrl;
+            var originImg = $originImg.get(0);
+            originImg.onload = function() { isLoaded = true; };
+            originImg.src = originImgUrl;
 
             var waitInterval = setInterval(function() {
                 if (isLoaded) {
                     clearInterval(waitInterval);
-                    $smallImg.css('background-image', 'url(' + largeImgUrl + ')');
-                    $largeImg.remove();
-                    $smallImg.removeAttr('data-respio-bg');
-                    $smallImg.css('height', '');
+                    $img.css('background-image', 'url(' + originImgUrl + ')');
+                    $originImg.remove();
+                    $img.removeAttr('data-respio-bg');
+                    $img.css('height', '');
                 }
             }, 0);
         }, 0);

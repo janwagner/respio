@@ -23,6 +23,8 @@
             }
         </style>
 
+        <!-- RESPIO -->
+
         <script>
 
             (function ($) {
@@ -60,21 +62,21 @@
                             var imgWidth = $img.parent().width() * devicePixelRatio;
 
                             var originUrl = $img.data('respio-src');
-                            var largeImgUrl = googleProxy(imgWidth, 604800, originUrl);
-                            var $largeImg = $('<img/>').hide().appendTo($('body'));
+                            var originImgUrl = googleProxy(imgWidth, 604800, originUrl);
+                            var $originImg = $('<img/>').hide().appendTo($('body'));
 
                             var isLoaded = false;
                             var isResized = false;
 
-                            var largeImg = $largeImg.get(0);
-                            largeImg.onload = function() { isLoaded = true; };
-                            largeImg.src = largeImgUrl;
+                            var originImg = $originImg.get(0);
+                            originImg.onload = function() { isLoaded = true; };
+                            originImg.src = originImgUrl;
 
                             var waitInterval = setInterval(function() {
                                 if (isLoaded) {
                                     clearInterval(waitInterval);
-                                    $img.attr('src', largeImgUrl);
-                                    $largeImg.remove();
+                                    $img.attr('src', originImgUrl);
+                                    $originImg.remove();
                                     $img.removeAttr('data-respio-src');
                                     $img.css('height', '');
                                 }
@@ -89,6 +91,8 @@
         </script>
 
     </head>
+
+    <!-- DEMO CONTENT -->
 
     <body>
 
