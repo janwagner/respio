@@ -11,14 +11,14 @@ THX to the Google cache シ
 2.3.0
 
 ### Demo
-  - [Responsive Images](http://dev.janwagner-design.de/respio/demo_responsive_image.html)
-  - [Responsive Background Images](http://dev.janwagner-design.de/respio/demo_responsive_background_image.html)
+  - [Pixel perfect responsive images](http://dev.janwagner-design.de/respio/demo_respio_image.html)
+  - [Pixel perfect background images](http://dev.janwagner-design.de/respio/demo_respio_background_image.html)
 
 ### Requires
 
 * [jQuery]
 
-## Responsive images
+## Pixel perfect responsive images
 #### 1. Markup
 ```sh
 <img data-respio-img="http://dev.janwagner-design.de/respio/image.jpg">
@@ -38,8 +38,8 @@ function googleProxy(width, refresh, url) {
 #### 3. Script
 ```sh
 
-$(window).on('load', responsiveImages);
-$(window).on('scroll', responsiveImages);
+$(window).on('load', respio);
+$(window).on('scroll', respio);
 
 function googleProxy(width, refresh, url) {
     return 'https://images1-focus-opensocial.googleusercontent.com/gadgets/proxy'
@@ -50,7 +50,7 @@ function googleProxy(width, refresh, url) {
     ;
 }
 
-function responsiveImages() {
+function respio() {
 
     var windowBottom = $(window).scrollTop() + $(window).height();
 
@@ -95,15 +95,15 @@ function responsiveImages() {
 
 }
 ```
-## Responsive background images
+## Pixel perfect background images
 #### 1. Markup (width and height required)
 ```sh
 <div data-respio-bg="http://dev.janwagner-design.de/respio/image.jpg" width="xxx" height="xxx"></div>
 ```
 #### 2. Script
 ```sh
-$(window).on('load', responsiveImages);
-$(window).on('scroll', responsiveImages);
+$(window).on('load', respio);
+$(window).on('scroll', respio);
 
 function googleProxy(width, refresh, url) {
     return 'https://images1-focus-opensocial.googleusercontent.com/gadgets/proxy'
@@ -114,7 +114,7 @@ function googleProxy(width, refresh, url) {
     ;
 }
 
-function responsiveImages() {
+function respio() {
 
     var windowBottom = $(window).scrollTop() + $(window).height();
 
